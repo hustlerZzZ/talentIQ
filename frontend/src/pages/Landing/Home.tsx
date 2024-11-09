@@ -11,7 +11,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../components/ui/accordion";
-import { Code, FileText, Users, Check } from "lucide-react";
+import { Code, FileText, Users } from "lucide-react";
+import Header from "../../components/Header.tsx";
 
 export default function InterviewPlatform() {
   return (
@@ -21,31 +22,10 @@ export default function InterviewPlatform() {
         <HeroSection />
         <FeaturesSection />
         <TestimonialsSection />
-        
         <FAQSection />
       </main>
       <Footer />
     </div>
-  );
-}
-
-function Header() {
-  return (
-    <header className="py-6 bg-white shadow-sm">
-      <div className="container mx-auto px-4">
-        <nav className="flex justify-between items-center">
-          <div className="text-xl font-semibold text-gray-800">
-            talentAid
-          </div>
-          <div className="space-x-4">
-            <Button variant="ghost">Features</Button>
-            <Button variant="ghost">Pricing</Button>
-            <Button variant="ghost">About</Button>
-            <Button className="bg-[#1D4ED8] hover:bg-blue-800">Sign Up</Button>
-          </div>
-        </nav>
-      </div>
-    </header>
   );
 }
 
@@ -158,8 +138,6 @@ function TestimonialsSection() {
     </section>
   );
 }
-
-
 
 function FAQSection() {
   const faqs = [

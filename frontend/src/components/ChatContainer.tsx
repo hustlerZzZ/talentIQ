@@ -1,4 +1,3 @@
-// src/components/ChatContainer.tsx
 import React, { useState, useEffect } from "react";
 import { socket } from "../socket/chat";
 import MessageList from "./MessageList";
