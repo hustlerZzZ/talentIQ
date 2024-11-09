@@ -8,6 +8,7 @@ import pdfRoute from "./routes/pdfRoute";
 import videoConfRoute from "./routes/videoConfRoute";
 import scheduleMeetRoute from "./routes/scheduleMeetRoute";
 import editorRoute from "./routes/editorRoute";
+import userRoute from "./routes/userRoute";
 
 import { StatusCodes } from "./enums/statusCodes";
 
@@ -25,6 +26,8 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 // Routes
 // 1. Upload pdf
+app.use("/api/v1/users", userRoute);
+
 app.use("/api/v1/pdf", pdfRoute);
 
 // 2. quiz modal data
