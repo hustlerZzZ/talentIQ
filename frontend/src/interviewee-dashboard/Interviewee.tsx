@@ -12,8 +12,8 @@ import VideoCall from "../Components/VideoCall";
 function Interviewee() {
   return (
     <>
-      <div className="h-screen p-6 bg-[#242629]">
-        <div className="h-24 w-full px-6 bg-[#16161a] rounded-md flex items-center justify-between">
+      <div className="w-full grid grid-cols-10 grid-rows-[auto_1fr] h-screen gap-6 p-6 bg-[#242629]">
+        <div className="col-span-10 py-4 px-6 bg-[#16161a] rounded-md flex items-center justify-between">
           <div className="flex gap-4">
           <Quiz/>
           <CodeEditor/>
@@ -35,10 +35,10 @@ function Interviewee() {
 
           </div>
         </div>
-        <div>
-          <div></div>
-          <div></div>
-        </div>
+        
+          <div className="col-span-4 row-span-9 bg-black rounded-md"></div>
+          <div className="col-span-6 row-span-9 bg-black rounded-md"></div>
+        
       </div>
     </>
   );
