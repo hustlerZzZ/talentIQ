@@ -64,3 +64,41 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* src/App.css */
+.message-list {
+  padding: 16px;
+  height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
+  margin-bottom: 12px;
+  padding: 10px;
+  border-radius: 8px;
+  word-wrap: break-word;
+}
+
+.message.sent {
+  align-self: flex-end;
+  background-color: #4caf50;
+  color: white;
+}
+
+.message.received {
+  align-self: flex-start;
+  background-color: #e0e0e0;
+  color: black;
+}
+
+.message-timestamp {
+  font-size: 0.7rem;
+  color: #888;
+  text-align: right;
+  margin-top: 4px;
+}
