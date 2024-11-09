@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { LiveblocksYjsProvider } from "@liveblocks/yjs";
 import { useRoom, useSelf } from "@liveblocks/react/suspense";
 import styles from "./CollaborativeEditor.module.css";
-import { Toolbar } from "../components/Toolbar";
+import { Toolbar } from "./Toolbar.tsx";
 
 function CodeEditor() {
   const room = useRoom();
@@ -73,7 +73,6 @@ function CodeEditor() {
         <div>
           {yUndoManager ? <Toolbar yUndoManager={yUndoManager} /> : null}
         </div>
-        
       </div>
       <div className={styles.editorContainer} ref={ref}></div>
     </div>
