@@ -7,8 +7,6 @@ This platform provides a comprehensive solution for conducting technical intervi
 - [Installation](#installation)
 - [Usage](#usage)
 - [Technologies Used](#technologies-used)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
