@@ -1,6 +1,7 @@
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import {createServer} from 'node:http';
 
 import quizRoute from "./routes/quizRoute";
 import chatRoute from "./routes/chatRoute";
@@ -13,6 +14,9 @@ import userRoute from "./routes/userRoute";
 import { StatusCodes } from "./enums/statusCodes";
 
 const app = express();
+export const server = createServer(app);
+
+
 const PORT = process.env.PORT || 6969;
 
 // Allowing cors
@@ -57,6 +61,6 @@ app.use("*", function (req, res) {
 });
 
 // Server
-app.listen(PORT, function () {
+server.listen(PORT, function () {
     console.log(`Server running on PORT : ${PORT}`);
 });
