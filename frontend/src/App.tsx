@@ -6,6 +6,7 @@ import Pricing from "./pages/Pricing/Pricing";
 import InterviewerDashboard from "./pages/Interviewer-dashboard/InterviewerDashboard";
 import ChatContainer from "./components/ChatContainer";
 import { SignedIn } from "@clerk/clerk-react";
+import LiveBlocksController from "./components/LiveBlocksProvider";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           element={<InterviewerDashboard />}
         />
         <Route path="/chatbot" element={<ChatContainer />} />
+        <Route path="/code-editor" element={<LiveBlocksController />} />
       </Routes>
     </BrowserRouter>
   );
