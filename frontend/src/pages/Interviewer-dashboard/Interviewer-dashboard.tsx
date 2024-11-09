@@ -11,7 +11,7 @@ function InterviewerDashboard() {
     <div className="w-full grid grid-cols-10 grid-rows-[auto_1fr] h-screen gap-6 p-6 bg-[#242629]">
       <div className="col-span-10 py-4 px-6 bg-[#16161a] rounded-md flex items-center justify-between">
         <div className="text-white text-xl">talentAid</div>
-        <div className="flex gap-4 ">
+        <div className="flex gap-3 ">
           <Setting />
           <Notification />
           <Chats />
