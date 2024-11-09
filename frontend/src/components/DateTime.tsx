@@ -5,8 +5,8 @@ const CurrentDateTimeComponent = ({
   dateClass: string;
   timeClass: string;
 }) => {
-  const currentDate = new Date().toLocaleDateString(); // Get current date in locale format
-  const currentTime = new Date().toLocaleTimeString(); // Get current time in locale format
+  const currentDate = new Date().toLocaleDateString();
+  const currentTime = new Date().toLocaleTimeString();
 
   return (
     <div>
