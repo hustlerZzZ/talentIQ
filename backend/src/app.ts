@@ -41,6 +41,9 @@ app.use("/api/v1/schedule", scheduleMeetRoute)
 // 6. editor meeting
 app.use("/api/v1/editor", editorRoute)
 
+// Serving the files to the frontend
+app.use("/uploads", express.static("uploads"));
+
 // Global catch handler
 app.use("*", function (req, res) {
     res.status(StatusCodes.FAILED).json({
