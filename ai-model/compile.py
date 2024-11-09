@@ -11,8 +11,8 @@ llm = ChatGroq(
 )
 
 # Path to the JSON file
-code_path = r"backend/dist/controller/code.json"
-output_path = r"backend/dist/controller/terminal.json"
+code_path = r"/home/harshitrajpandey/full-stack-projects/talentIQ/backend/dist/controller/code.json"
+output_path = r"/home/harshitrajpandey/full-stack-projects/talentIQ/backend/dist/controller/terminal.json"
 
 # Read the JSON file
 with open(code_path, "r") as file:
@@ -31,8 +31,8 @@ try:
     
     
     # Save the response to terminal.json
-    #with open(output_path, "w") as output_file:
-        #json.dump({"output": response}, output_file, indent=4)
+    with open(output_path, "w") as output_file:
+        json.dump({"output": response}, output_file, indent=4)
     
     print("Response saved to terminal.json")
 except Exception as e:
