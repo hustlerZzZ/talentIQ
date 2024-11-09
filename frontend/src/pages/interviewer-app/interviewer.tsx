@@ -13,7 +13,6 @@ function interviewer() {
       <div className="col-span-10 py-4 px-6 bg-[#16161a] rounded-md flex items-center justify-between">
         <div className="flex gap-4">
           <Quiz />
-          <CodeEditor />
           <Chats />
         </div>
         <div className="flex gap-4">
@@ -28,7 +27,10 @@ function interviewer() {
         </div>
       </div>
 
-      <div className="col-span-4 row-span-9 bg-black rounded-md"></div>
+      <div className="col-span-4 row-span-9 bg-black rounded-md p-4">
+        <CodeEditor />
+      </div>
+
       <div className="col-span-6 row-span-9 bg-black rounded-md"></div>
     </div>
   );
