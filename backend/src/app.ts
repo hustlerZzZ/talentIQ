@@ -26,7 +26,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
 // Routes
 // 1. Upload pdf
-app.use("/api/v1/users", userRoute);
+// app.use("/api/v1/users", userRoute);
 
 app.use("/api/v1/pdf", pdfRoute);
 
@@ -50,13 +50,13 @@ app.use("/uploads", express.static("uploads"));
 
 // Global catch handler
 app.use("*", function (req, res) {
-  res.status(StatusCodes.FAILED).json({
-    status: "failed",
-    msg: "This route is not defined",
-  });
+    res.status(StatusCodes.FAILED).json({
+        status: "failed",
+        msg: "This route is not defined",
+    });
 });
 
 // Server
 app.listen(PORT, function () {
-  console.log(`Server running on PORT : ${PORT}`);
+    console.log(`Server running on PORT : ${PORT}`);
 });
