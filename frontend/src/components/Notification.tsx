@@ -1,12 +1,12 @@
 import { FaBell } from "react-icons/fa";
 
-function Notification({ className, icon }) {
+function Notification() {
   return (
     <>
       <button
-        className={`px-5 py-3 bg-zinc-700  flex justify-center items-center ${className}`}
+        className={`px-5 py-3 bg-zinc-700 flex justify-center items-center rounded-full`}
       >
-        <FaBell className={`text-white text-xl ${icon}`} />
+        <FaBell className={`text-white text-xl rounded-full`} />
       </button>
     </>
   );

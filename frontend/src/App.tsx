@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Interviewer from "./pages/Interviewer-dashboard/interviewer";
-import Interviewee from "./pages/Interviewee-dashboard/Interviewee";
+import InterviewerDashboard from "./pages/Interviewer-dashboard/Interviewer-dashboard.tsx";
+import Interviewee from "./pages/interviewee-app/Interviewee";
+import Interviewer from "./pages/interviewer-app/interviewer.tsx";
 import Home from "./pages/Landing/Home";
 import Pricing from "./pages/Pricing/Pricing";
-import InterviewerDashboard from "./pages/Interviewer-dashboard/InterviewerDashboard";
 import ChatContainer from "./components/ChatContainer";
 import { SignedIn } from "@clerk/clerk-react";
 import LiveBlocksController from "./components/LiveBlocksProvider";
@@ -14,19 +14,23 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route
-          path="/interviewer"
+          path="/interviewer-dashboard"
+          element={
+            <SignedIn>
+              <InterviewerDashboard />
+            </SignedIn>
+          }
+        />
+        <Route
+          path="/interviewer-app"
           element={
             <SignedIn>
               <Interviewer />
             </SignedIn>
           }
         />
-        <Route path="/interviewee" element={<Interviewee />} />
+        <Route path="/interviewee-app" element={<Interviewee />} />
         <Route path="/pricing" element={<Pricing />} />
-        <Route
-          path="/interviewer-dashboard"
-          element={<InterviewerDashboard />}
-        />
         <Route path="/chatbot" element={<ChatContainer />} />
         <Route path="/code-editor" element={<LiveBlocksController />} />
       </Routes>

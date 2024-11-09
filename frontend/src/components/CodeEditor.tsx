@@ -5,67 +5,67 @@ import { EditorState } from "@codemirror/state";
 import { javascript } from "@codemirror/lang-javascript";
 import { useCallback, useEffect, useState } from "react";
 import { LiveblocksYjsProvider } from "@liveblocks/yjs";
-import { useRoom } from "@liveblocks/react/suspense";
-import styles from './CollaborativeEditor.module.css';
-
+import { useRoom, useSelf } from "@liveblocks/react/suspense";
+import styles from "./CollaborativeEditor.module.css";
+import { Toolbar } from "../components/Toolbar";
 
 function CodeEditor() {
-    const room = useRoom();
-    const [element, setElement] = useState<HTMLElement>();
-    const [yUndoManager, setYUndoManager] = useState<Y.UndoManager>();
+  const room = useRoom();
+  const [element, setElement] = useState<HTMLElement>();
+  const [yUndoManager, setYUndoManager] = useState<Y.UndoManager>();
 
-    // Get user info from Liveblocks authentication endpoint
-    const userInfo = useSelf((me) => me.info);
+  // Get user info from Liveblocks authentication endpoint
+  const userInfo = useSelf((me) => me.info);
 
-    const ref = useCallback((node: HTMLElement | null) => {
-      if (!node) return;
-      setElement(node);
-    }, []);
+  const ref = useCallback((node: HTMLElement | null) => {
+    if (!node) return;
+    setElement(node);
+  }, []);
 
-    useEffect(() => {
-      let provider: LiveblocksYjsProvider;
-      let ydoc: Y.Doc;
-      let view: EditorView;
+  useEffect(() => {
+    let provider: LiveblocksYjsProvider;
+    let ydoc: Y.Doc;
+    let view: EditorView;
 
-      if (!element || !room || !userInfo) {
-        return;
-      }
+    if (!element || !room || !userInfo) {
+      return;
+    }
 
-      // Create Yjs provider and document
-      ydoc = new Y.Doc();
-      provider = new LiveblocksYjsProvider(room as any, ydoc);
-      const ytext = ydoc.getText("codemirror");
-      const undoManager = new Y.UndoManager(ytext);
-      setYUndoManager(undoManager);
+    // Create Yjs provider and document
+    ydoc = new Y.Doc();
+    provider = new LiveblocksYjsProvider(room as any, ydoc);
+    const ytext = ydoc.getText("codemirror");
+    const undoManager = new Y.UndoManager(ytext);
+    setYUndoManager(undoManager);
 
-      // Attach user info to Yjs
-      provider.awareness.setLocalStateField("user", {
-        name: userInfo.name,
-        color: userInfo.color,
-        colorLight: userInfo.color + "80", // 6-digit hex code at 50% opacity
-      });
+    // Attach user info to Yjs
+    provider.awareness.setLocalStateField("user", {
+      name: userInfo.name,
+      color: userInfo.color,
+      colorLight: userInfo.color + "80", // 6-digit hex code at 50% opacity
+    });
 
-      const state = EditorState.create({
-        doc: ytext.toString(),
-        extensions: [
-          basicSetup,
-          javascript(),
-          yCollab(ytext, provider.awareness, { undoManager }),
-        ],
-      });
+    const state = EditorState.create({
+      doc: ytext.toString(),
+      extensions: [
+        basicSetup,
+        javascript(),
+        yCollab(ytext, provider.awareness, { undoManager }),
+      ],
+    });
 
-      // Attach CodeMirror to element
-      view = new EditorView({
-        state,
-        parent: element,
-      });
+    // Attach CodeMirror to element
+    view = new EditorView({
+      state,
+      parent: element,
+    });
 
-      return () => {
-        ydoc?.destroy();
-        provider?.destroy();
-        view?.destroy();
-      };
-    }, [element, room, userInfo]);
+    return () => {
+      ydoc?.destroy();
+      provider?.destroy();
+      view?.destroy();
+    };
+  }, [element, room, userInfo]);
 
   return (
     <div className={styles.container}>
@@ -73,12 +73,11 @@ function CodeEditor() {
         <div>
           {yUndoManager ? <Toolbar yUndoManager={yUndoManager} /> : null}
         </div>
-        <Avatars />
+        
       </div>
       <div className={styles.editorContainer} ref={ref}></div>
     </div>
   );
-  
 }
 
 export default CodeEditor;
