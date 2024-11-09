@@ -23,15 +23,16 @@ code = data.get("code")
 language = data.get("language")
 
 # Prepare prompt based on language
-prompt = f"Compile and run the following {language} code:\n\n{code}"
+prompt = f"Compile and run the following {language} code:\n\n{code} just give the output in terminal format "
 
 # Execute the code via LLaMA API
 try:
     response = llm.invoke(prompt + " Just give a JSON format output").content.strip()
     
+    
     # Save the response to terminal.json
-    with open(output_path, "w") as output_file:
-        json.dump({"output": response}, output_file, indent=4)
+    #with open(output_path, "w") as output_file:
+        #json.dump({"output": response}, output_file, indent=4)
     
     print("Response saved to terminal.json")
 except Exception as e:
