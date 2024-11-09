@@ -1,10 +1,10 @@
 import { MdChat } from "react-icons/md";
 
-function Chats() {
+function Chats({className,icon}) {
   return (
     <>
-        <button className="px-5 py-3 bg-zinc-700 rounded-lg flex justify-center items-center">
-            <MdChat className="text-white text-xl" />
+        <button className={`px-5 py-3 bg-zinc-700  flex justify-center items-center ${className}`}>
+            <MdChat className={`text-white text-xl ${icon}`} />
              </button>
     </>
   )
