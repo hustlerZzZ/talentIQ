@@ -7,7 +7,6 @@ import Pricing from "./pages/Pricing/Pricing";
 import ChatContainer from "./components/ChatContainer";
 import { SignedIn } from "@clerk/clerk-react";
 import CodeEditor from "./components/CodeEditor.tsx";
-import { Code } from "lucide-react";
 
 
 function App() {
