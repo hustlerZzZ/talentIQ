@@ -4,17 +4,23 @@ import { MessageProps } from "../utils/interfaces/message";
 
 interface MessageListProps {
   messages: MessageProps[];
+  senderId: string;
 }
 
-const MessageList: React.FC<MessageListProps> = ({ messages }) => {
+const MessageList: React.FC<MessageListProps> = ({ messages, senderId }) => {
   return (
-    <div className="flex">
+    <div className="message-list">
       {messages.map((msg) => (
-        <div key={msg.id} className="message">
-          <strong>{msg.sender}:</strong> {msg.content}
-          <span className="timestamp">
+        <div
+          key={msg.id}
+          className={`message ${
+            senderId === "user123" ? "sent" : "received"
+          }`}
+        >
+          <div className="message-content">{msg.content}</div>
+          <div className="message-timestamp">
             {msg.timestamp.toLocaleTimeString()}
-          </span>
+          </div>
         </div>
       ))}
     </div>

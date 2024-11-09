@@ -11,7 +11,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../components/ui/accordion";
-import { Code, FileText, Users, Check } from "lucide-react";
+import { Code, FileText, Users } from "lucide-react";
+import Header from "../../components/Header.tsx";
 
 export default function InterviewPlatform() {
   return (
@@ -21,31 +22,10 @@ export default function InterviewPlatform() {
         <HeroSection />
         <FeaturesSection />
         <TestimonialsSection />
-        <PricingSection />
         <FAQSection />
       </main>
       <Footer />
     </div>
-  );
-}
-
-function Header() {
-  return (
-    <header className="py-6 bg-white shadow-sm">
-      <div className="container mx-auto px-4">
-        <nav className="flex justify-between items-center">
-          <div className="text-xl font-semibold text-gray-800">
-            InterviewPro
-          </div>
-          <div className="space-x-4">
-            <Button variant="ghost">Features</Button>
-            <Button variant="ghost">Pricing</Button>
-            <Button variant="ghost">About</Button>
-            <Button>Sign Up</Button>
-          </div>
-        </nav>
-      </div>
-    </header>
   );
 }
 
@@ -66,7 +46,7 @@ function HeroSection() {
           size="lg"
           className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
         >
-          Start Your Free Trial
+          Create Meeting
         </Button>
       </div>
     </section>
@@ -150,86 +130,6 @@ function TestimonialsSection() {
                 <p className="text-gray-600 mb-4">"{testimonial.quote}"</p>
                 <p className="font-semibold">{testimonial.author}</p>
                 <p className="text-sm text-gray-500">{testimonial.position}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-function PricingSection() {
-  const pricingPlans = [
-    {
-      title: "Starter",
-      price: "$49",
-      features: [
-        "Up to 5 users",
-        "Basic MCQ assessments",
-        "Simple code editor",
-      ],
-      isPopular: false,
-    },
-    {
-      title: "Pro",
-      price: "$99",
-      features: [
-        "Up to 15 users",
-        "Advanced MCQ assessments",
-        "LLM 3.1 powered code editor",
-        "Collaborative interviews",
-      ],
-      isPopular: true,
-    },
-    {
-      title: "Enterprise",
-      price: "Custom",
-      features: [
-        "Unlimited users",
-        "Custom MCQ assessments",
-        "Advanced code editor",
-        "Priority support",
-      ],
-      isPopular: false,
-    },
-  ];
-
-  return (
-    <section className="py-16">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-8">Pricing Plans</h2>
-        <div className="grid md:grid-cols-3 gap-8">
-          {pricingPlans.map((plan, index) => (
-            <Card
-              key={index}
-              className={plan.isPopular ? "border-blue-500" : ""}
-            >
-              <CardHeader>
-                <CardTitle className="text-center">{plan.title}</CardTitle>
-              </CardHeader>
-              <CardContent className="text-center">
-                <p className="text-4xl font-bold mb-4">
-                  {plan.price}
-                  <span className="text-sm font-normal">/month</span>
-                </p>
-                <ul className="text-left space-y-2">
-                  {plan.features.map((feature, featureIndex) => (
-                    <li key={featureIndex} className="flex items-center">
-                      <Check className="h-5 w-5 text-green-500 mr-2" />{" "}
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <Button
-                  className={`mt-6 w-full ${
-                    plan.isPopular ? "bg-blue-600 hover:bg-blue-700" : ""
-                  }`}
-                >
-                  {plan.title === "Enterprise"
-                    ? "Contact Sales"
-                    : "Choose Plan"}
-                </Button>
               </CardContent>
             </Card>
           ))}

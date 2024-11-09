@@ -1,4 +1,3 @@
-// src/components/ChatContainer.tsx
 import React, { useState, useEffect } from "react";
 import { socket } from "../socket/chat";
 import MessageList from "./MessageList";
@@ -32,7 +31,7 @@ const ChatContainer: React.FC = () => {
 
   return (
     <div className="rounded-xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/3 pt-96 px-5 border-2 border-black">
-      <MessageList messages={messages} />
+      <MessageList messages={messages} senderId="user123"/>
       <MessageInput onSend={sendMessage} />
     </div>
   );

@@ -1,19 +1,25 @@
-import {
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  UserButton,
-} from "@clerk/clerk-react";
+import { SignInButton } from "@clerk/clerk-react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
-    <header>
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
-      <SignedIn>
-        <UserButton />
-      </SignedIn>
+    <header className="py-6 bg-white shadow-sm">
+      <div className="container mx-auto px-4">
+        <nav className="flex justify-between items-center">
+          <div className="text-xl font-semibold text-gray-800">talentAid</div>
+          <div className="space-x-8 flex items-center justify-between">
+            <Link to="/pricing">Pricing</Link>
+            <Link to="/about-us">About Us</Link>
+
+            <div className="bg-[#1D4ED8] hover:bg-blue-800 text-white px-4 py-1.5 rounded">
+              <SignInButton
+                forceRedirectUrl="/interviewer"
+                signUpForceRedirectUrl="/interviewer"
+              />
+            </div>
+          </div>
+        </nav>
+      </div>
     </header>
   );
 }
