@@ -7,7 +7,7 @@ yarn-error.log
 build/
 dist/
 
-# .env files for environment variables
+# .env files for environment variables (any subfolder)
 .env
 .env.local
 .env.development
@@ -18,7 +18,7 @@ dist/
 .next/
 out/
 
-# VSCode settings
+# VSCode settings (any subfolder)
 .vscode/
 
 # MacOS system files
@@ -30,7 +30,7 @@ out/
 # Windows system files
 Thumbs.db
 
-# Log files
+# Log files (any subfolder)
 *.log
 
 # Package lock and yarn lock files (optional, include if necessary)
@@ -54,3 +54,12 @@ test-coverage/
 
 # Build artifacts (if using other build tools)
 out/
+
+# Ignore all files in subdirectories called "tmp" (example)
+tmp/
+
+# Ignore files and directories with a specific extension in any subfolder (e.g., .bak files)
+*.bak
+
+# Ignore all .log files in any folder
+**/*.log
