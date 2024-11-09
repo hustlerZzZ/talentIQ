@@ -1,25 +1,3 @@
-<<<<<<< HEAD
-import { Server } from 'socket.io';
-import {server} from '../app';
-
-
-export async function chatController () {
-    const io = new Server(server);
-
-    io.on("connection", (socket) => {
-      console.log("a user connected");
-    });
-
-    io.on("message", (socket) => {
-        console.log('hello');
-        
-      socket.on("chat message", (msg: string) => {
-        console.log("message: " + msg);
-      });
-    });
-
-}
-=======
 import { Server, Socket } from "socket.io";
 import http from "node:http";
 
@@ -43,4 +21,3 @@ io.on("message", (socket: Socket) => {
     console.log("User disconnected:", socket.id);
   });
 });
->>>>>>> dc61a8a3e26b5b5379eff8fa539fbdb72c37f36d
