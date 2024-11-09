@@ -27,7 +27,7 @@ prompt = f"Compile and run the following {language} code:\n\n{code} just give th
 
 # Execute the code via LLaMA API
 try:
-    response = llm.invoke(prompt + " Just give a JSON format output").content.strip()
+    response = llm.invoke(prompt + " Just give a JSON format output thr format will be {'Output': '<Actual output>'}").content.strip()
     
     
     # Save the response to terminal.json
