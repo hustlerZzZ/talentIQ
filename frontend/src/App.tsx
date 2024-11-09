@@ -7,7 +7,7 @@ import Pricing from "./pages/Pricing/Pricing";
 import ChatContainer from "./components/ChatContainer";
 import { SignedIn } from "@clerk/clerk-react";
 import LiveBlocksController from "./components/LiveBlocksProvider";
-
+import Modal from "./components/Modal";
 function App() {
   return (
     <BrowserRouter>
@@ -33,6 +33,7 @@ function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/chatbot" element={<ChatContainer />} />
         <Route path="/code-editor" element={<LiveBlocksController />} />
+        <Route path="/modal" element={<Modal />} />
       </Routes>
     </BrowserRouter>
   );
