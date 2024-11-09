@@ -1,17 +1,11 @@
-const CurrentDateTimeComponent = ({
-  dateClass,
-  timeClass,
-}: {
-  dateClass: string;
-  timeClass: string;
-}) => {
+const CurrentDateTimeComponent = () => {
   const currentDate = new Date().toLocaleDateString();
   const currentTime = new Date().toLocaleTimeString();
 
   return (
     <div>
-      <p className={`${dateClass}`}>Current Date: {currentDate}</p>
-      <p className={`${timeClass}`}>Current Time: {currentTime}</p>
+      <p className="text-white">Current Date: {currentDate}</p>
+      <p className="text-white">Current Time: {currentTime}</p>
     </div>
   );
 };

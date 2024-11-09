@@ -1,9 +1,5 @@
-
-
 function interviewer() {
-  return (
-    <div>interviewer</div>
-  )
+  return <div>interviewer</div>;
 }
 
-export default interviewer
+export default interviewer;

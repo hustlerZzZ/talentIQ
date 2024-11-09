@@ -13,8 +13,8 @@ export default function Header() {
 
             <div className="bg-[#1D4ED8] hover:bg-blue-800 text-white px-4 py-1.5 rounded">
               <SignInButton
-                forceRedirectUrl="/interviewer"
-                signUpForceRedirectUrl="/interviewer"
+                forceRedirectUrl="/interviewer-dashboard"
+                signUpForceRedirectUrl="/interviewer-dashboard"
               />
             </div>
           </div>

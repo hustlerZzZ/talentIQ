@@ -15,7 +15,7 @@ function App() {
           path="/interviewer-dashboard"
           element={
             <SignedIn>
-              <Interviewer-dashboard />
+              <InterviewerDashboard />
             </SignedIn>
           }
         />
