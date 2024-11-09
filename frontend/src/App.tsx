@@ -5,6 +5,7 @@ import Home from "./pages/Landing/Home";
 import Pricing from "./pages/Pricing/Pricing";
 import InterviewerDashboard from "./pages/Interviewer Dashboard/InterviewerDashboard";
 
+import ChatContainer from "./components/ChatContainer";
 function App() {
   return (
     <BrowserRouter>
@@ -15,6 +16,7 @@ function App() {
         <Route path="/interviewee" element={<Interviewee />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/interviewer-dashboard" element={<InterviewerDashboard />} />
+        <Route path="/chatbot" element={<ChatContainer />} />
       </Routes>
     </BrowserRouter>
   );
