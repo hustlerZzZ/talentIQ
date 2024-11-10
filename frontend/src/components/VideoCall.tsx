@@ -4,7 +4,7 @@ function VideoCall() {
   return (
     <>
       <button
-        className={`px-5 py-3 bg-zinc-700 rounded-lg flex justify-center items-center `}
+        className={`px-3 py-3 bg-zinc-800 rounded-full flex justify-center items-center `}
       >
         <IoVideocam className={`text-white text-xl `} />
       </button>
