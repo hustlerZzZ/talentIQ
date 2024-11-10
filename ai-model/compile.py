@@ -11,8 +11,8 @@ llm = ChatGroq(
 )
 
 # Path to the JSON file
-code_path = r"/home/harshitrajpandey/full-stack-projects/talentIQ/backend/dist/controller/code.json"
-output_path = r"/home/harshitrajpandey/full-stack-projects/talentIQ/backend/dist/controller/terminal.json"
+code_path = r"backend/dist/controller/code.json"
+output_path = r"backend/dist/controller/terminal.json"
 
 # Read the JSON file
 with open(code_path, "r") as file:
@@ -27,9 +27,8 @@ prompt = f"Compile and run the following {language} code:\n\n{code} just give th
 
 # Execute the code via LLaMA API
 try:
-    output = llm.invoke(prompt + "the output should be like this '========/n<output line by line>/n========'").content.strip()
+    response = llm.invoke(prompt + "the format of output should be exactly '========/n<output line by line>/n========'").content.strip()
     
-    response =  '{ '+output+' }'
     # Save the response to terminal.json
     with open(output_path, "w") as output_file:
         json.dump({"output": response}, output_file, indent=4)
