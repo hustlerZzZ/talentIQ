@@ -2,7 +2,7 @@ import * as monaco from "monaco-editor";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
-function CodeEditor( {language} : {language: string}) {
+function CodeEditor( ) {
   const [output, setOutput] = useState<String>('');
    const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
    const containerRef = useRef<HTMLDivElement>(null);
@@ -26,7 +26,7 @@ function CodeEditor( {language} : {language: string}) {
   useEffect(() => {
      if (containerRef.current) {
        editorRef.current = monaco.editor.create(containerRef.current, {
-         language: language,
+         language: "python",
          theme: "vs-dark",
          automaticLayout: false,
        });
