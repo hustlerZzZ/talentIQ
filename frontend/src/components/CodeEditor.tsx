@@ -1,80 +1,46 @@
-import * as Y from "yjs";
-import { yCollab } from "y-codemirror.next";
-import { EditorView, basicSetup } from "codemirror";
-import { EditorState } from "@codemirror/state";
-import { javascript } from "@codemirror/lang-javascript";
-import { useCallback, useEffect, useState } from "react";
-import { LiveblocksYjsProvider } from "@liveblocks/yjs";
-import { useRoom, useSelf } from "@liveblocks/react/suspense";
-import styles from "./CollaborativeEditor.module.css";
-import { Toolbar } from "./Toolbar.tsx";
+import * as monaco from "monaco-editor";
+import { useEffect, useRef } from "react";
+import axios from "axios";
 
 function CodeEditor() {
-  const room = useRoom();
-  const [element, setElement] = useState<HTMLElement>();
-  const [yUndoManager, setYUndoManager] = useState<Y.UndoManager>();
+   const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+   const containerRef = useRef<HTMLDivElement>(null);
+   const saveCode = async () => {
+    try {
+      console.log('yes');  
+      const code = editorRef.current?.getValue();
+      const model = editorRef.current?.getModel();
+      const response = await axios.post("http://localhost:6969/api/v1/editor/save-code", {
+        code: code,
+        language: model?.getLanguageId()
+      });
+      console.log(response.data.message);
+    } catch (error) {
+      console.error("Error saving code:", error);
+    }
+  };
 
-  // Get user info from Liveblocks authentication endpoint
-  const userInfo = useSelf((me) => me.info);
-
-  const ref = useCallback((node: HTMLElement | null) => {
-    if (!node) return;
-    setElement(node);
-  }, []);
 
   useEffect(() => {
-    let provider: LiveblocksYjsProvider;
-    let ydoc: Y.Doc;
-    let view: EditorView;
-
-    if (!element || !room || !userInfo) {
-      return;
-    }
-
-    // Create Yjs provider and document
-    ydoc = new Y.Doc();
-    provider = new LiveblocksYjsProvider(room as any, ydoc);
-    const ytext = ydoc.getText("codemirror");
-    const undoManager = new Y.UndoManager(ytext);
-    setYUndoManager(undoManager);
-
-    // Attach user info to Yjs
-    provider.awareness.setLocalStateField("user", {
-      name: userInfo.name,
-      color: userInfo.color,
-      colorLight: userInfo.color + "80", // 6-digit hex code at 50% opacity
-    });
-
-    const state = EditorState.create({
-      doc: ytext.toString(),
-      extensions: [
-        basicSetup,
-        javascript(),
-        yCollab(ytext, provider.awareness, { undoManager }),
-      ],
-    });
-
-    // Attach CodeMirror to element
-    view = new EditorView({
-      state,
-      parent: element,
-    });
+     if (containerRef.current) {
+       editorRef.current = monaco.editor.create(containerRef.current, {
+         language: "python",
+         theme: "vs-dark",
+         automaticLayout: true,
+       });
+     }
 
     return () => {
-      ydoc?.destroy();
-      provider?.destroy();
-      view?.destroy();
+      editorRef.current?.dispose();
     };
-  }, [element, room, userInfo]);
+  }, []);
 
   return (
-    <div className={styles.container}>
-      <div className={styles.editorHeader}>
-        <div>
-          {yUndoManager ? <Toolbar yUndoManager={yUndoManager} /> : null}
-        </div>
-      </div>
-      <div className={styles.editorContainer} ref={ref}></div>
+    <div className="h-full relative">
+      <div ref={containerRef} className="w-full h-full" />
+      <button onClick={saveCode} className="bg-green-600 text-white px-10 py-3 absolute right-4 bottom-2 z-10">
+        Run
+      </button>
     </div>
   );
 }
