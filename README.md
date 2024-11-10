@@ -33,6 +33,10 @@ This platform provides a comprehensive solution for conducting technical intervi
 2. Install dependencies:
     ```bash
     pip install -r requirements.txt
+    cd frontend
+    npm i
+    cd ..
+    cd backend
     npm i
     ```
 
@@ -40,8 +44,14 @@ This platform provides a comprehensive solution for conducting technical intervi
 
 4. Start the application:
     ```bash
+    cd frontend
     npm run dev
     ```
+    ```bash
+    cd backend
+    tsc
+    node dist/app.js
+   ```
 
 ## Usage
 
@@ -53,7 +63,7 @@ This platform provides a comprehensive solution for conducting technical intervi
 
 - **Frontend**: React.js, TailwindCSS, Redux, Clerk, Radix, Clsx, LucidReact, ReactRouterDom, Socket, Y.js, ReactQuery 
 - **Backend**: Node.js, Clerk, B crypt js, cors , express , helmet, http,jwt, multor,socket, prisma,
-- **Video Calls**: WebRTC
+- **Video Calls**: Socket
 - **Coding**: Monaco editor, Fs, llama for generatign test cases and compiling
 - **AI for Test Cases**: Large Language Model (LLM) of Llama 3.1 8b through Gorq
 
