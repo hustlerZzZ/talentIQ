@@ -22,8 +22,8 @@ export default function InterviewPlatform() {
         <FeaturesSection />
         <TestimonialsSection />
         <FAQSection />
+        <Footer />
       </main>
-      <Footer />
     </div>
   );
 }
