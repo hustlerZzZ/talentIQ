@@ -1,5 +1,5 @@
 import json
-from langchain_groq import ChatGroq
+from langchain_groq import ChatGroq 
 
 # Initialize the LLaMA model
 llm = ChatGroq(
@@ -23,16 +23,15 @@ code = data.get("code")
 language = data.get("language")
 
 # Prepare prompt based on language
-prompt = f"Compile and run the following {language} code:\n\n{code} just give the output in terminal format "
+prompt = f"Compile and run the following {language} code:\n\n{code} just give the output only, no extra sentences like 'here is the output', no triple quotes anytime, but include new line characters if any just the output in a string format in terminal format "
 
 # Execute the code via LLaMA API
 try:
-    output = llm.invoke(prompt + "the output should be like this '========/n<output line by line>/n========'").content.strip()
-    
-    response =  '{ '+output+' }'
+    response = llm.invoke(prompt + "the format '<output line by line>'").content.strip()
+    print(response)
     # Save the response to terminal.json
     with open(output_path, "w") as output_file:
-        json.dump({"output": response}, output_file, indent=4)
+     output_file.write(response)
     
     print("Response saved to terminal.json")
 except Exception as e:

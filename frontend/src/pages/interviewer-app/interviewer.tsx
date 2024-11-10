@@ -6,8 +6,23 @@ import Mic from "../../components/Mic.tsx";
 import VideoCall from "../../components/VideoCall.tsx";
 import Setting from "../../components/Setting.tsx";
 import EndCallButton from "../../components/EndCallButton.tsx";
+import { TbBrandCpp } from "react-icons/tb";
+import { FaJava } from "react-icons/fa";
+import { IoLogoJavascript } from "react-icons/io5";
+import { FaPython } from "react-icons/fa";
+import { useState } from "react";
+
+
 
 function interviewer() {
+  const [language, setlanguage] = useState('C++');
+  const [languageIcon, setLanguageIcon] = useState(<TbBrandCpp />);
+
+  const handleClick = (e: Event) => {
+    setLanguageIcon(e.target.firstChild.nodeValue);
+    setlanguage(e.target.lastChild?.nodeValue);
+  }
+
   return (
     <div className="w-full grid grid-cols-10 grid-rows-[auto_1fr] h-screen gap-6 p-6 bg-[#242629]">
       <div className="col-span-10 py-4 px-6 bg-[#16161a] rounded-md flex items-center justify-between">
@@ -27,7 +42,34 @@ function interviewer() {
         </div>
       </div>
 
-      <div className="col-span-4 row-span-9 bg-black rounded-md p-4">
+      <div className="col-span-4 row-span-9 bg-black rounded-md relative px-5 py-2">
+        <h2 className="text-white text-sm pb-4 py-2 font-bold">Text Editor</h2>
+        <div
+          className="bg-zinc-800 text-white w-32 h-8 absolute top-2 right-10
+         cursor-pointer flex gap-3 rounded-xl space-y-20 justify-center items-center"
+        >
+          {languageIcon} {language}
+        </div>
+        <div className="hidden flex-col overflow-scroll">
+          <ul>
+            <li onClick={(e) => handleClick(e)} className="flex gap-2">
+              <TbBrandCpp />
+              <h2>C++</h2>
+            </li>
+            <li onClick={(e) => handleClick(e)} className="flex gap-2">
+              <FaJava />
+              <h2>Java</h2>
+            </li>
+            <li onClick={(e) => handleClick(e)} className="flex gap-2">
+              <IoLogoJavascript />
+              <h2>JavaScript</h2>
+            </li>
+            <li onClick={(e) => handleClick(e)} className="flex gap-2">
+              <FaPython />
+              <h2>Python</h2>
+            </li>
+          </ul>
+        </div>
         <CodeEditor />
       </div>
 
