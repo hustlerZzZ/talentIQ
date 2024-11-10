@@ -6,7 +6,7 @@ import Mic from "../../components/Mic.tsx";
 import VideoCall from "../../components/VideoCall.tsx";
 import Setting from "../../components/Setting.tsx";
 import EndCallButton from "../../components/EndCallButton.tsx";
-
+import Code from "../../components/Code.tsx";
 function interviewer() {
   return (
     <div className="w-full grid grid-cols-10 grid-rows-[auto_1fr] h-screen gap-6 p-6 bg-[#242629]">
@@ -14,6 +14,7 @@ function interviewer() {
         <div className="flex gap-4">
           <Quiz />
           <Chats />
+          <Code/>
         </div>
         <div className="flex gap-4">
           <Emoji />
