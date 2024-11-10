@@ -70,7 +70,7 @@ function interviewer() {
             </li>
           </ul>
         </div>
-        <CodeEditor />
+        <CodeEditor language={language} />
       </div>
 
       <div className="col-span-6 row-span-9 bg-black rounded-md"></div>

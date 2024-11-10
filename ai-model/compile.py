@@ -11,8 +11,8 @@ llm = ChatGroq(
 )
 
 # Path to the JSON file
-code_path = r"/home/harshitrajpandey/full-stack-projects/talentIQ/backend/dist/controller/code.json"
-output_path = r"/home/harshitrajpandey/full-stack-projects/talentIQ/backend/dist/controller/terminal.json"
+code_path = r"backend/dist/controller/code.json"
+output_path = r"backend/dist/controller/terminal.json"
 
 # Read the JSON file
 with open(code_path, "r") as file:

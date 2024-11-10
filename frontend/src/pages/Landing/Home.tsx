@@ -12,19 +12,18 @@ import {
   AccordionTrigger,
 } from "../../components/ui/accordion";
 import { Code, FileText, Users } from "lucide-react";
-import Header from "../../components/Header.tsx";
+import Footer from "../../components/Footer.tsx";
 
 export default function InterviewPlatform() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
-      <Header />
       <main className="flex-grow">
         <HeroSection />
         <FeaturesSection />
         <TestimonialsSection />
         <FAQSection />
+        <Footer />
       </main>
-      <Footer />
     </div>
   );
 }
@@ -46,7 +45,7 @@ function HeroSection() {
           size="lg"
           className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full"
         >
-          Create Meeting
+          Start taking interviews
         </Button>
       </div>
     </section>
@@ -175,17 +174,5 @@ function FAQSection() {
         </Accordion>
       </div>
     </section>
-  );
-}
-
-function Footer() {
-  return (
-    <footer className="bg-gray-100 py-8">
-      <div className="container mx-auto px-4 text-center text-gray-600">
-        <p>
-          &copy; {new Date().getFullYear()} InterviewPro. All rights reserved.
-        </p>
-      </div>
-    </footer>
   );
 }

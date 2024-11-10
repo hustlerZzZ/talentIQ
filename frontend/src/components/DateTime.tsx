@@ -3,9 +3,10 @@ const CurrentDateTimeComponent = () => {
   const currentTime = new Date().toLocaleTimeString();
 
   return (
-    <div>
-      <p className="text-white">Current Date: {currentDate}</p>
-      <p className="text-white">Current Time: {currentTime}</p>
+    <div className="w-full h-28 rounded-lg bg-zinc-700 flex flex-col gap-3 items-center p-6">
+
+      <p className="text-white text-3xl">{currentTime}</p>
+      <p className="text-white">{currentDate}</p>
     </div>
   );
 };

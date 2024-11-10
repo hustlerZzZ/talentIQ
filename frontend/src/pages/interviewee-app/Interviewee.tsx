@@ -6,6 +6,7 @@ import Mic from "../../components/Mic.tsx";
 import Quiz from "../../components/Quiz.tsx";
 import Setting from "../../components/Setting.tsx";
 import VideoCall from "../../components/VideoCall.tsx";
+import ChatContainer from "../../components/ChatContainer.tsx";
 
 function Interviewee() {
   return (
@@ -14,7 +15,7 @@ function Interviewee() {
         <div className="col-span-10 py-4 px-6 bg-[#16161a] rounded-md flex items-center justify-between">
           <div className="flex gap-4">
             <Quiz />
-            <CodeEditor />
+            
             <Chats />
           </div>
           <div className="flex gap-4">
@@ -29,7 +30,9 @@ function Interviewee() {
           </div>
         </div>
 
-        <div className="col-span-4 row-span-9 bg-black rounded-md"></div>
+        <div className="col-span-4 row-span-9 bg-black rounded-md">
+          <ChatContainer />
+        </div>
         <div className="col-span-6 row-span-9 bg-black rounded-md"></div>
       </div>
     </>

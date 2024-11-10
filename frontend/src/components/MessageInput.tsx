@@ -1,31 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, KeyboardEvent } from "react";
 
 interface MessageInputProps {
   onSend: (content: string) => void;
+  disabled?: boolean;
 }
 
-const MessageInput: React.FC<MessageInputProps> = ({ onSend }) => {
+const MessageInput: React.FC<MessageInputProps> = ({
+  onSend,
+  disabled = false,
+}) => {
   const [message, setMessage] = useState("");
 
   const handleSend = () => {
     if (message.trim()) {
-      onSend(message);
+      onSend(message.trim());
       setMessage("");
     }
   };
 
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
   return (
-    <div className="rounded-lg p-1 absolute bottom-2 flex gap-4">
+    <div className="flex gap-4">
       <input
-        className="border-2 border-black rounded-xl py-2 px-3 w-80"
+        className="flex-1 rounded-md outline-none bg-zinc-700 text-white py-2 px-3"
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
+        onKeyPress={handleKeyPress}
         placeholder="Type a message"
+        disabled={disabled}
       />
       <button
-        className="bg-blue-600 py-2 px-8 rounded-2xl text-white font-bold"
+        className="bg-blue-600 py-2 px-8 rounded-md text-white font-medium disabled:bg-zinc-700"
         onClick={handleSend}
+        disabled={disabled || !message.trim()}
       >
         Send
       </button>

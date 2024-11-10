@@ -6,7 +6,33 @@ import Chats from "../../components/Chat";
 import DateTime from "../../components/DateTime";
 import { UserButton } from "@clerk/clerk-react";
 
+import { useUser } from "@clerk/clerk-react";
+import { useAppDispatch } from "../../redux/hooks/hooks.ts";
+import {
+  interviewerState,
+  setInterviewer,
+} from "../../redux/slice/interviewerSlice.ts";
+import { useEffect } from "react";
+
+import type { UserResource } from "@clerk/types";
+import type { AppDispatch } from "../../redux/store";
+
+const mapUserToInterviewer = (user: UserResource): interviewerState => ({
+  email: user.primaryEmailAddress?.emailAddress || "",
+  fullName: `${user.firstName || ""} ${user.lastName || ""}`,
+});
+
 function InterviewerDashboard() {
+  const { user } = useUser() as { user: UserResource | null };
+  const dispatch: AppDispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (user) {
+      const interviewerData = mapUserToInterviewer(user);
+      dispatch(setInterviewer(interviewerData));
+    }
+  }, [user, dispatch]);
+
   return (
     <div className="w-full grid grid-cols-10 grid-rows-[auto_1fr] h-screen gap-6 p-6 bg-[#242629]">
       <div className="col-span-10 py-4 px-6 bg-[#16161a] rounded-md flex items-center justify-between">
