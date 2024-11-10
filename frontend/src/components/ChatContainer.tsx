@@ -68,11 +68,11 @@ const ChatContainer: React.FC = () => {
   );
 
   return (
-    <div className="flex flex-col h-[600px] rounded-xl border-2 border-black relative">
+    <div className="flex flex-col h-full rounded-xl border-2 border-black relative">
       <div className="flex-1 overflow-y-auto p-4">
         <MessageList messages={messages} senderId={username} />
       </div>
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-zinc-500">
         <MessageInput onSend={sendMessage} disabled={!isConnected} />
       </div>
       {!isConnected && (

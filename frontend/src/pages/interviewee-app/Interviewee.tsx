@@ -15,7 +15,7 @@ function Interviewee() {
         <div className="col-span-10 py-4 px-6 bg-[#16161a] rounded-md flex items-center justify-between">
           <div className="flex gap-4">
             <Quiz />
-            <CodeEditor />
+            
             <Chats />
           </div>
           <div className="flex gap-4">

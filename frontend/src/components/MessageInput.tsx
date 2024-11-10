@@ -28,7 +28,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
   return (
     <div className="flex gap-4">
       <input
-        className="flex-1 border-2 border-black rounded-xl py-2 px-3"
+        className="flex-1 rounded-md outline-none bg-zinc-700 text-white py-2 px-3"
         type="text"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
@@ -37,7 +37,7 @@ const MessageInput: React.FC<MessageInputProps> = ({
         disabled={disabled}
       />
       <button
-        className="bg-blue-600 py-2 px-8 rounded-2xl text-white font-bold disabled:bg-gray-400"
+        className="bg-blue-600 py-2 px-8 rounded-md text-white font-medium disabled:bg-zinc-700"
         onClick={handleSend}
         disabled={disabled || !message.trim()}
       >
