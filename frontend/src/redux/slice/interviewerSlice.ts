@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store.ts";
 
-interface interviewerState {
+export interface interviewerState {
   fullName: string;
   email: string;
 }
