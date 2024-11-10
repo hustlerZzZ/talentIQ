@@ -6,13 +6,20 @@ interface Props {
   roomId: string;
 }
 
+interface ChatMessage {
+  userId: string;
+  message: string;
+  timestamp: number;
+  role: "interviewer" | "interviewee";
+}
+
 interface RemoteVideo {
   userId: string;
   stream: MediaStream;
   role: "interviewer" | "interviewee";
 }
 
-const VideoConference = ({ role, roomId }) => {
+const VideoConference = ({ role, roomId }: Props) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   const [peers, setPeers] = useState<Map<string, RTCPeerConnection>>(new Map());
   const [remoteVideos, setRemoteVideos] = useState<RemoteVideo[]>([]);
@@ -28,6 +35,10 @@ const VideoConference = ({ role, roomId }) => {
   const userId = useRef(`user-${Math.random().toString(36).substr(2, 9)}`);
 
   const initializePeerConnection = (remoteSocketId: string) => {
+    console.log(
+      "Initializing peer connection for remote socket: ${remoteSocketId}",
+    );
+
     const peerConnection = new RTCPeerConnection({
       iceServers: [
         { urls: "stun:stun.l.google.com:19302" },
@@ -35,9 +46,25 @@ const VideoConference = ({ role, roomId }) => {
       ],
     });
 
+    peerConnection.onconnectionstatechange = () => {
+      console.log(
+        "Connection state changed to: ${peerConnection.connectionState}",
+      );
+      setConnectionStatus(
+        `Connection state: ${peerConnection.connectionState}`,
+      );
+    };
+
+    peerConnection.oniceconnectionstatechange = () => {
+      console.log(
+        `ICE connection state changed to: ${peerConnection.iceConnectionState}`,
+      );
+    };
+
     if (localStreamRef.current) {
       localStreamRef.current.getTracks().forEach((track) => {
         if (localStreamRef.current) {
+          console.log(`Adding local track to peer connection: ${track.kind}`);
           peerConnection.addTrack(track, localStreamRef.current);
         }
       });
@@ -45,6 +72,7 @@ const VideoConference = ({ role, roomId }) => {
 
     peerConnection.onicecandidate = (event) => {
       if (event.candidate && socket) {
+        console.log("Sending ICE candidate");
         socket.emit("ice-candidate", {
           candidate: event.candidate,
           to: remoteSocketId,
@@ -53,7 +81,7 @@ const VideoConference = ({ role, roomId }) => {
     };
 
     peerConnection.ontrack = (event) => {
-      console.log("Received remote track:", event.streams[0]);
+      console.log("Received remote track:", event.streams[0].getTracks());
       const remoteUserId = remoteSocketId;
 
       setRemoteVideos((prevVideos) => {
@@ -75,8 +103,11 @@ const VideoConference = ({ role, roomId }) => {
   };
 
   useEffect(() => {
-    const newSocket = io("http://localhost:6969/api/v1/video/connect", {
-      path: "/api/v1/video/connect",
+    const newSocket = io("http://localhost:6969/video", {
+      transports: ["websocket"],
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
     });
 
     setSocket(newSocket);
@@ -87,6 +118,7 @@ const VideoConference = ({ role, roomId }) => {
         audio: true,
       })
       .then((stream) => {
+        console.log("Local media stream obtained:", stream.getTracks());
         localStreamRef.current = stream;
         if (localVideoRef.current) {
           localVideoRef.current.srcObject = stream;
@@ -103,7 +135,7 @@ const VideoConference = ({ role, roomId }) => {
       newSocket.close();
       peers.forEach((peer) => peer.close());
     };
-  }, [roomId, role, peers]);
+  }, [roomId, role]);
 
   useEffect(() => {
     if (!socket) return;
@@ -128,16 +160,21 @@ const VideoConference = ({ role, roomId }) => {
         socketId: remoteSocketId,
         role: remoteRole,
       }) => {
-        console.log("User joined:", remoteUserId, remoteSocketId);
+        console.log(
+          `User joined - ID: ${remoteUserId}, Socket: ${remoteSocketId}, Role: ${remoteRole}`,
+        );
 
         const peerConnection = initializePeerConnection(remoteSocketId);
-        setPeers(
-          (prevPeers) => new Map(prevPeers.set(remoteSocketId, peerConnection)),
-        );
+        setPeers((prevPeers) => {
+          const newPeers = new Map(prevPeers);
+          newPeers.set(remoteSocketId, peerConnection);
+          return newPeers;
+        });
 
         try {
           const offer = await peerConnection.createOffer();
           await peerConnection.setLocalDescription(offer);
+          console.log("Sending offer to remote peer");
           socket.emit("offer", { offer, to: remoteSocketId });
         } catch (error) {
           console.error("Error creating offer:", error);
@@ -146,8 +183,13 @@ const VideoConference = ({ role, roomId }) => {
     );
 
     socket.on("offer", async ({ offer, from }) => {
+      console.log(`Received offer from: ${from}`);
       const peerConnection = initializePeerConnection(from);
-      setPeers((prevPeers) => new Map(prevPeers.set(from, peerConnection)));
+      setPeers((prevPeers) => {
+        const newPeers = new Map(prevPeers);
+        newPeers.set(from, peerConnection);
+        return newPeers;
+      });
 
       try {
         await peerConnection.setRemoteDescription(
@@ -155,6 +197,7 @@ const VideoConference = ({ role, roomId }) => {
         );
         const answer = await peerConnection.createAnswer();
         await peerConnection.setLocalDescription(answer);
+        console.log("Sending answer to remote peer");
         socket.emit("answer", { answer, to: from });
       } catch (error) {
         console.error("Error handling offer:", error);
@@ -162,6 +205,7 @@ const VideoConference = ({ role, roomId }) => {
     });
 
     socket.on("answer", async ({ answer, from }) => {
+      console.log(`Received answer from: ${from}`);
       const peerConnection = peers.get(from);
       if (peerConnection) {
         try {
@@ -175,6 +219,7 @@ const VideoConference = ({ role, roomId }) => {
     });
 
     socket.on("ice-candidate", async ({ candidate, from }) => {
+      console.log(`Received ICE candidate from: ${from}`);
       const peerConnection = peers.get(from);
       if (peerConnection) {
         try {
@@ -189,8 +234,11 @@ const VideoConference = ({ role, roomId }) => {
       const peer = peers.get(socketId);
       if (peer) {
         peer.close();
-        peers.delete(socketId);
-        setPeers(new Map(peers));
+        setPeers((prevPeers) => {
+          const newPeers = new Map(prevPeers);
+          newPeers.delete(socketId);
+          return newPeers;
+        });
         setRemoteVideos((prevVideos) =>
           prevVideos.filter((v) => v.userId !== socketId),
         );
@@ -214,7 +262,7 @@ const VideoConference = ({ role, roomId }) => {
       socket.off("user-left");
       socket.off("new-message");
     };
-  }, [socket, peers, initializePeerConnection]);
+  }, [socket]);
 
   const toggleAudio = () => {
     if (localStreamRef.current) {
@@ -239,20 +287,21 @@ const VideoConference = ({ role, roomId }) => {
   const handleSendMessage = () => {
     if (!socket || !messageInput.trim()) return;
 
-    socket.emit("send-message", {
-      roomId,
-      message: messageInput,
+    const message: ChatMessage = {
       userId: userId.current,
+      message: messageInput,
+      timestamp: Date.now(),
       role,
-    });
+    };
 
+    socket.emit("send-message", { roomId, ...message });
+    setMessages((prev) => [...prev, message]);
     setMessageInput("");
   };
 
   return (
     <div className="flex h-screen">
       <div className="flex-1 p-4">
-        {/* Connection Status */}
         <div
           className={`mb-4 p-2 rounded ${
             isRoomReady
@@ -264,7 +313,6 @@ const VideoConference = ({ role, roomId }) => {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          {/* Local Video */}
           <div className="relative">
             <video
               ref={localVideoRef}
@@ -292,7 +340,6 @@ const VideoConference = ({ role, roomId }) => {
             </div>
           </div>
 
-          {/* Remote Videos */}
           {remoteVideos.map((remote) => (
             <div key={remote.userId} className="relative">
               <video
@@ -300,9 +347,7 @@ const VideoConference = ({ role, roomId }) => {
                 playsInline
                 className="w-full h-64 bg-gray-800 rounded-lg object-cover"
                 ref={(el) => {
-                  if (el) {
-                    el.srcObject = remote.stream;
-                  }
+                  if (el) el.srcObject = remote.stream;
                 }}
               />
               <span className="absolute bottom-2 left-2 text-white bg-black bg-opacity-50 px-2 rounded">

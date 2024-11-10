@@ -4,13 +4,12 @@ import cors from "cors";
 import { createServer } from "node:http";
 import { Server } from "socket.io";
 import { setupSocket } from "./controller/chatController";
-import videoConfRoute from "./routes/videoConfRoute";
+import { setupVideoSocket } from "./controller/videoController";
 import { StatusCodes } from "./enums/statusCodes";
 
 const app = express();
 export const server = createServer(app);
 
-// Initialize Socket.IO
 const io = new Server(server, {
   cors: {
     origin: "http://localhost:5173",
@@ -19,8 +18,8 @@ const io = new Server(server, {
   },
 });
 
-// Setup Socket handlers
 setupSocket(io);
+setupVideoSocket(io);
 
 const PORT = process.env.PORT || 6969;
 
@@ -34,10 +33,6 @@ app.use(
 app.use(express.json());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 
-// Routes
-app.use("/api/v1/video", videoConfRoute);
-// ... other routes
-
 app.use("*", function (req, res) {
   res.status(StatusCodes.FAILED).json({
     status: "failed",
@@ -46,5 +41,5 @@ app.use("*", function (req, res) {
 });
 
 server.listen(PORT, function () {
-  console.log(`Server running on PORT : ${PORT}`);
+  console.log(`Server running on PORT: ${PORT}`);
 });
