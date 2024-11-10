@@ -8,12 +8,16 @@ import ChatContainer from "./components/ChatContainer";
 import { SignedIn } from "@clerk/clerk-react";
 import CodeEditor from "./components/CodeEditor.tsx";
 import VideoConf from "./pages/VideoConf.tsx";
+import Layout from "./components/Layout.tsx";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Home />} />
+          <Route path="/pricing" element={<Pricing />} />
+        </Route>
         <Route
           path="/interviewer-dashboard"
           element={
@@ -35,9 +39,8 @@ function App() {
           path="/interview"
           element={<VideoConf role="interviewer" roomId="interview-123" />}
         />
-
-        <Route path="/pricing" element={<Pricing />} />
         <Route path="/chatbot" element={<ChatContainer />} />
+
         <Route path="/code-editor" element={<CodeEditor />} />
       </Routes>
     </BrowserRouter>
