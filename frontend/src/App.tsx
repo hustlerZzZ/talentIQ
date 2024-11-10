@@ -7,7 +7,7 @@ import Pricing from "./pages/Pricing/Pricing";
 import ChatContainer from "./components/ChatContainer";
 import { SignedIn } from "@clerk/clerk-react";
 import CodeEditor from "./components/CodeEditor.tsx";
-
+import VideoConf from "./pages/VideoConf.tsx";
 
 function App() {
   return (
@@ -31,6 +31,11 @@ function App() {
           }
         />
         <Route path="/interviewee-app" element={<Interviewee />} />
+        <Route
+          path="/interview"
+          element={<VideoConf role="interviewer" roomId="interview-123" />}
+        />
+
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/chatbot" element={<ChatContainer />} />
         <Route path="/code-editor" element={<CodeEditor />} />
